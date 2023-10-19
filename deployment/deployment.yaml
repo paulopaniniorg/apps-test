@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apps-test
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apps-test
+  template:
+    metadata:
+      labels:
+        app: apps-test
+    spec:
+      containers:
+      - name:  apps-test
+        image: ghcr.io/paulopaniniorg/apps-test:latest
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+      imagePullSecrets:
+      - name: github-secret
